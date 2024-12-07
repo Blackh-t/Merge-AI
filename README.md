@@ -13,24 +13,24 @@ We invite you to explore the DEMO and share your feedback! If there’s a featur
 
 ---
 ### Current Features:
-**AI Memory**
+- **AI Memory**
 
 ### In Progress:
-**Web Integration** : Security
+- **Web Integration** : Security
 
 ---
 ### Roadmap
-**Web Integration**
-**AI Memory**
-**Omni-Search**
-**Mail API**
-**Economic Market Analyzer**:  
-**Encrypted P2P Connections**
-**Device Synchronization**
-**Customizable Task Automation**
-**Image Processing**
-**Smart Notifications**
+- **Web Integration**
+- **AI Memory**
+- **Omni-Search**
+- **Mail API**
+- **Economic Market Analyzer**:  
+- **Encrypted P2P Connections**
+- **Device Synchronization**
+- **Customizable Task Automation**
+- **Image Processing**
+- **Smart Notifications**
 
 ---
 ### Upcoming Features
-**DashBoard**
+- **DashBoard**
