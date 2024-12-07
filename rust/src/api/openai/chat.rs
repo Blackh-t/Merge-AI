@@ -11,7 +11,6 @@ use reqwest;
 use std::error::Error;
 
 async fn get() -> Result<String, Box<dyn Error>> {
-    let url = "https://ch-ai.netlify.app/.netlify/functions/functions"; // Din Netlify-funksjon url
     let response = reqwest::get(url).await?;
     let body = response.text().await?;
     Ok(body)
