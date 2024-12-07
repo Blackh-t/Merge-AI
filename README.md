@@ -1,16 +1,35 @@
-# test_app
+# Merge-AI
+https://merge-ai.netlify.app/
 
-A new Flutter project.
+## Introduction
 
-## Getting Started
+Merge-AI is here to integrate AI into your everyday tasks, offering the features you’ve always wanted from @OpenAI, including:  
+- **Mail API**  
+- **Image Fetching**  
+- **Omni-Search**  
+- **Device Integration**  
 
-This project is a starting point for a Flutter application.
+We invite you to explore the DEMO and share your feedback! If there’s a feature you’d like Merge-AI to include, let us know—we’re constantly evolving to meet your needs.
 
-A few resources to get you started if this is your first Flutter project:
+---
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### In Progress:
+**Web Integration**: Seamlessly connects to your browser for enhanced productivity.  
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+---
+
+## Roadmap
+**Web Integration**: Seamlessly connects to your browser for enhanced productivity.  
+**AI Memory**: Intelligently adapts to your preferences and retains key data (with user control).  
+**Omni-Search**: Unified search across platforms, including web, documents, and local files.  
+**Mail API**: Manages and automates email tasks.  
+**Economic Market Analyzer**: Real-time analysis of financial markets.  
+**Encrypted P2P Connections**: Secure and private communication with peers.  
+**Device Synchronization**: Controls and accesses devices across your ecosystem.  
+**Customizable Task Automation**: Automates workflows tailored to your preferences.  
+**Image Processing**: Fetches and processes images from multiple sources.  
+**Smart Notifications**: Prioritizes and delivers alerts based on your context.
+
+
+### Upcoming Features
+**AI Memory**: Intelligently adapts to your preferences and retains key data (with user control). 
