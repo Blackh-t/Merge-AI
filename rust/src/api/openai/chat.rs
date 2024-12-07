@@ -7,42 +7,45 @@ use async_openai_wasm::{
     },
     Client,
 };
-use reqwest;
+
+use crate::api::openai::http_handler::*;
 use std::error::Error;
 
-async fn get() -> Result<String, Box<dyn Error>> {
-    let url = "https://ch-ai.netlify.app/.netlify/functions/functions"; // Din Netlify-funksjon url
-    let response = reqwest::get(url).await?;
-    let body = response.text().await?;
-    Ok(body)
+async fn openai(input: Vec<(String, String)>) -> Result<String, Box<dyn Error>> {
+    // Create request
+    let chat_histories = msg_convertion(input);
+    let request = CreateChatCompletionRequestArgs::default()
+        .max_tokens(512u32)
+        .model("gpt-3.5-turbo")
+        .messages(chat_histories)
+        .build()?;
+
+    // OpenAI Auth
+    let config = OpenAIConfig::new()
+        .with_api_key(fetch_request().await)
+        .with_api_base("https://api.openai.com/v1/");
+
+    // Fetch response
+    let client = Client::with_config(config);
+    let response = client.chat().create(request).await?;
+    let msg = response.choices[0].clone();
+
+    Ok(msg.clone().message.content.unwrap())
 }
 
-async fn fetch_request() -> String {
-    match get().await {
-        Ok(msg) => format!("{}", msg),
-        Err(e) => e.to_string(),
-    }
-}
-
-static API_BASE: &str = "https://api.openai.com/v1/";
-async fn openai(input: String) -> Result<String, Box<dyn Error>> {
-    let a = fetch_request().await;
-    let config = OpenAIConfig::new().with_api_key(a);
-    let config = if API_BASE != "..." {
-        config.with_api_base(API_BASE)
-    } else {
-        config
-    };
-
-    // Definer innholdet i meldingene
-    let inpux: &str = input.trim();
-    let messages_content = vec![("system", "You are a helpful assistant."), ("user", inpux)];
+fn msg_convertion(contents: Vec<(String, String)>) -> Vec<ChatCompletionRequestMessage> {
+    let messages_content = contents; //vec![("system", "You are a helpful assistant."), ("user", inpux)];
 
     // Konverter til ChatCompletionRequestMessage
     let messages: Vec<ChatCompletionRequestMessage> = messages_content
         .into_iter()
-        .map(|(role, content)| match role {
+        .map(|(role, content)| match role.trim() {
             "system" => ChatCompletionRequestSystemMessageArgs::default()
+                .content(content)
+                .build()
+                .unwrap()
+                .into(),
+            "assistant" => ChatCompletionRequestAssistantMessageArgs::default()
                 .content(content)
                 .build()
                 .unwrap()
@@ -55,23 +58,12 @@ async fn openai(input: String) -> Result<String, Box<dyn Error>> {
             _ => panic!("Unknown role"),
         })
         .collect();
-
-    // Bygg forespørselen ved å bruke `messages`
-    let request = CreateChatCompletionRequestArgs::default()
-        .max_tokens(512u32)
-        .model("gpt-3.5-turbo")
-        .messages(messages) // Bruk `Vec` her
-        .build()?;
-    let client = Client::with_config(config);
-    let response = client.chat().create(request).await?;
-    let msg = response.choices[0].clone();
-
-    Ok(msg.clone().message.content.unwrap())
+    messages
 }
 
-pub async fn chat(input: String) -> String {
+pub async fn chat(input: Vec<(String, String)>) -> String {
     match openai(input).await {
         Ok(msg) => format!("{}", msg),
-        Err(e) => format!("Test failed with error: {}", e),
+        Err(e) => format!("OpenAI: {}", e),
     }
 }

@@ -4,6 +4,7 @@
 // ignore_for_file: unused_import, unused_element, unnecessary_import, duplicate_ignore, invalid_use_of_internal_member, annotate_overrides, non_constant_identifier_names, curly_braces_in_flow_control_structures, prefer_const_literals_to_create_immutables, unused_field
 
 import 'api/openai/chat.dart';
+import 'api/openai/http_handler.dart';
 import 'api/simple.dart';
 import 'dart:async';
 import 'dart:convert';
@@ -69,7 +70,7 @@ class RustLib extends BaseEntrypoint<RustLibApi, RustLibApiImpl, RustLibWire> {
   String get codegenVersion => '2.6.0';
 
   @override
-  int get rustContentHash => 261985151;
+  int get rustContentHash => -739193407;
 
   static const kDefaultExternalLibraryLoaderConfig =
       ExternalLibraryLoaderConfig(
@@ -80,7 +81,10 @@ class RustLib extends BaseEntrypoint<RustLibApi, RustLibApiImpl, RustLibWire> {
 }
 
 abstract class RustLibApi extends BaseApi {
-  Future<String> crateApiOpenaiChatChat({required String input});
+  Future<String> crateApiOpenaiChatChat(
+      {required List<(String, String)> input});
+
+  Future<String> crateApiOpenaiHttpHandlerFetchRequest();
 
   String crateApiSimpleGreet({required String name});
 
@@ -96,11 +100,12 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   });
 
   @override
-  Future<String> crateApiOpenaiChatChat({required String input}) {
+  Future<String> crateApiOpenaiChatChat(
+      {required List<(String, String)> input}) {
     return handler.executeNormal(NormalTask(
       callFfi: (port_) {
         final serializer = SseSerializer(generalizedFrbRustBinding);
-        sse_encode_String(input, serializer);
+        sse_encode_list_record_string_string(input, serializer);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
             funcId: 1, port: port_);
       },
@@ -120,12 +125,36 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   @override
+  Future<String> crateApiOpenaiHttpHandlerFetchRequest() {
+    return handler.executeNormal(NormalTask(
+      callFfi: (port_) {
+        final serializer = SseSerializer(generalizedFrbRustBinding);
+        pdeCallFfi(generalizedFrbRustBinding, serializer,
+            funcId: 2, port: port_);
+      },
+      codec: SseCodec(
+        decodeSuccessData: sse_decode_String,
+        decodeErrorData: null,
+      ),
+      constMeta: kCrateApiOpenaiHttpHandlerFetchRequestConstMeta,
+      argValues: [],
+      apiImpl: this,
+    ));
+  }
+
+  TaskConstMeta get kCrateApiOpenaiHttpHandlerFetchRequestConstMeta =>
+      const TaskConstMeta(
+        debugName: "fetch_request",
+        argNames: [],
+      );
+
+  @override
   String crateApiSimpleGreet({required String name}) {
     return handler.executeSync(SyncTask(
       callFfi: () {
         final serializer = SseSerializer(generalizedFrbRustBinding);
         sse_encode_String(name, serializer);
-        return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 2)!;
+        return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 3)!;
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_String,
@@ -147,7 +176,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     return handler.executeSync(SyncTask(
       callFfi: () {
         final serializer = SseSerializer(generalizedFrbRustBinding);
-        return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 3)!;
+        return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 4)!;
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_unit,
@@ -177,6 +206,25 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  List<(String, String)> dco_decode_list_record_string_string(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return (raw as List<dynamic>).map(dco_decode_record_string_string).toList();
+  }
+
+  @protected
+  (String, String) dco_decode_record_string_string(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 2) {
+      throw Exception('Expected 2 elements, got ${arr.length}');
+    }
+    return (
+      dco_decode_String(arr[0]),
+      dco_decode_String(arr[1]),
+    );
+  }
+
+  @protected
   int dco_decode_u_8(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     return raw as int;
@@ -200,6 +248,28 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     // Codec=Sse (Serialization based), see doc to use other codecs
     var len_ = sse_decode_i_32(deserializer);
     return deserializer.buffer.getUint8List(len_);
+  }
+
+  @protected
+  List<(String, String)> sse_decode_list_record_string_string(
+      SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+
+    var len_ = sse_decode_i_32(deserializer);
+    var ans_ = <(String, String)>[];
+    for (var idx_ = 0; idx_ < len_; ++idx_) {
+      ans_.add(sse_decode_record_string_string(deserializer));
+    }
+    return ans_;
+  }
+
+  @protected
+  (String, String) sse_decode_record_string_string(
+      SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_field0 = sse_decode_String(deserializer);
+    var var_field1 = sse_decode_String(deserializer);
+    return (var_field0, var_field1);
   }
 
   @protected
@@ -237,6 +307,24 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_i_32(self.length, serializer);
     serializer.buffer.putUint8List(self);
+  }
+
+  @protected
+  void sse_encode_list_record_string_string(
+      List<(String, String)> self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_i_32(self.length, serializer);
+    for (final item in self) {
+      sse_encode_record_string_string(item, serializer);
+    }
+  }
+
+  @protected
+  void sse_encode_record_string_string(
+      (String, String) self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_String(self.$1, serializer);
+    sse_encode_String(self.$2, serializer);
   }
 
   @protected
