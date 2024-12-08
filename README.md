@@ -1,6 +1,7 @@
 # Merge-AI
 https://merge-ai.netlify.app/
-[![GitHub](https://img.shields.io/github/followers/USERNAME?label=Follow&style=social)](https://github.com/sponsors/Blackh-t)
+
+[![Sponsor](https://img.shields.io/github/followers/USERNAME?label=Follow&style=social)](https://github.com/sponsors/Blackh-t)
 
 ## Introduction
 
