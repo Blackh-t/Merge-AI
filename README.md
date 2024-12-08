@@ -1,8 +1,9 @@
 # Merge-AI
 https://merge-ai.netlify.app/
+✨ Add to your home screen for a better experience!
+
 
 [![Sponsor](https://img.shields.io/badge/sponsor-GitHub-lightgreen)](https://github.com/sponsors/Blackh-t)
-
 ## Introduction
 
 Merge-AI is here to integrate AI into your everyday tasks, offering the features you’ve always wanted from @OpenAI, including:  
