@@ -42,5 +42,5 @@ We invite you to explore the DEMO and share your feedback! If there’s a featur
 - **DashBoard**
 - **Face Recognition**
 
-<img src="demo.png" alt="Merge-AI" width="100" />
+<img src="demo.png" alt="Merge-AI" width="500" />
 
