@@ -16,8 +16,10 @@ async fn openai(input: Vec<(String, String)>) -> Result<String, Box<dyn Error>> 
     let chat_histories = msg_convertion(input);
     let request = CreateChatCompletionRequestArgs::default()
         .max_tokens(512u32)
-        .model("gpt-3.5-turbo")
+        .model("gpt-4o-mini")
         .messages(chat_histories)
+        .temperature(0f32)
+        .top_p(0f32)
         .build()?;
 
     // OpenAI Auth
