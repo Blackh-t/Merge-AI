@@ -33,7 +33,7 @@ class _Chat extends State<Chat> {
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(0),
-                color: HexColor('#222831')
+                color: HexColor('000000')
               ),
               child: GroupedListView<Message, DateTime>(
                 padding: const EdgeInsets.all(10),
@@ -46,13 +46,32 @@ class _Chat extends State<Chat> {
                     : Alignment.centerLeft,
                   child: Card(
                     color: message.isSentByMe
-                      ? HexColor('#C7C8CC')
-                      : HexColor('#31363F'),
+                      ? HexColor('#00000')
+                      : HexColor('#00000'),
                     margin: message.isSentByMe
                       ? const EdgeInsets.only(left: 42, top: 10, bottom: 10, right: 10)
-                      : const EdgeInsets.only(right: 42, top: 10, bottom: 10, left: 10),
+                      : const EdgeInsets.only(right: 20, top: 10, bottom: 10, left: 10),
                     elevation:10,
                     child: Container(
+                      decoration: BoxDecoration(
+                        border: message.isSentByMe 
+                          ? Border(
+                            right: BorderSide(
+                              color: message.isSentByMe
+                                ? Colors.blueAccent 
+                                : Colors.amberAccent,
+                              width: 1 
+                            )
+                            )
+                          : Border(
+                            left: BorderSide(
+                              color: message.isSentByMe
+                                ? Colors.black 
+                                : Colors.grey,
+                              width: 1 
+                            )
+                          ),
+                      ),
                       padding: const EdgeInsets.all(13),
                       child: MarkdownBody(
                         selectable: true,
@@ -63,10 +82,10 @@ class _Chat extends State<Chat> {
                                 bodyMedium: TextStyle(
                                   fontSize: 14,
                                   fontWeight: message.isSentByMe
-                                    ? FontWeight.w400
-                                    : FontWeight.w300,
+                                    ? FontWeight.w300
+                                    : FontWeight.w200,
                                   color: message.isSentByMe
-                                    ? HexColor('#000')
+                                    ? HexColor('#EEEEEE')
                                     : HexColor('#EEEEEE'),
                                 )
                               ) 
@@ -74,12 +93,15 @@ class _Chat extends State<Chat> {
                         ).copyWith(
                           codeblockDecoration: 
                             BoxDecoration (
-                              color: HexColor('#222831'),
+                              border: Border.all(
+                                color: Colors.white24,
+                                width: 0.5
+                              ),
                               borderRadius: BorderRadius.circular(10)
                             ),
                           code: TextStyle (
                               fontSize: 12,
-                              color: HexColor('#76ABAE'),
+                              color: Colors.blueAccent,
                           ),
                           h1: TextStyle(color: HexColor('#EEEEEE')), 
                           h2: TextStyle(color: HexColor('#EEEEEE')), 
@@ -88,7 +110,7 @@ class _Chat extends State<Chat> {
                         data: message.text,
                         builders: {
                           'latex' : LatexElementBuilder(
-                            textStyle: TextStyle(color: HexColor('#76ABAE'))
+                            textStyle: TextStyle(color: Colors.blueAccent),
                           ),
                         },
                         extensionSet: md.ExtensionSet(
@@ -111,16 +133,16 @@ class _Chat extends State<Chat> {
             ),
           ),
           Container(
-            color: HexColor('#222831'),
+            color: HexColor('#000000'),
             child: Container(
-              margin: const EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 10),
+              margin: const EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 30),
               child: TextField(
                 controller: _controller,
-                style: const TextStyle(fontSize: 14),
+                style: const TextStyle(fontSize: 14, color: Colors.black),
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: HexColor('#EEEEEE'),
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(4)),
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(14)),
                   hintText: "Hva tenker du på?",
                 ),
                 keyboardType: TextInputType.multiline,
@@ -129,11 +151,9 @@ class _Chat extends State<Chat> {
                 textInputAction: TextInputAction.done,
                 onSubmitted: (text)  async{   
                   _controller.clear();
-
                   chatHistories.add(("user", text));
                   String response = await chat(input: chatHistories );
                   chatHistories.add(("assistant", response));
-
                   setState(() {
                     messages.add(
                       Message(
@@ -170,7 +190,7 @@ AppBar appBar() {
     ),
     elevation: 0,
     centerTitle: false,
-    backgroundColor: HexColor('#222831'),
+    backgroundColor: HexColor('#000000'),
     leading: GestureDetector(
       onTap: () {
         
@@ -181,7 +201,7 @@ AppBar appBar() {
         child: SvgPicture.asset('assets/icons/stack.svg'),
         decoration: BoxDecoration(
           color: Colors.amberAccent,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(100),
         ),
       ),
     ),

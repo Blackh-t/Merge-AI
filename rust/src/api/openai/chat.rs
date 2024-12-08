@@ -1,3 +1,4 @@
+use super::http_handler::*;
 use async_openai_wasm::config::OpenAIConfig;
 use async_openai_wasm::{
     types::{
@@ -7,8 +8,6 @@ use async_openai_wasm::{
     },
     Client,
 };
-
-use crate::api::openai::http_handler::*;
 use std::error::Error;
 
 async fn openai(input: Vec<(String, String)>) -> Result<String, Box<dyn Error>> {
