@@ -1,3 +1,3 @@
-mod client;
+pub mod client;
 mod error;
-mod mail_body;
+pub mod mail_body;

@@ -13,9 +13,14 @@ pub struct SendGridClient {
     client: reqwest::Client,
 }
 
+fn build_body(mail_info: &MailBox) -> Result<String, serde_json::Error> {
+    let converting = serde_json::to_string_pretty(mail_info)?;
+    Ok(converting)
+}
+
 impl SendGridClient {
     pub fn new<S: Into<String>>(key: S) -> SendGridClient {
-        // Build HTTP-request
+        // Init HTTP-request
         let builder = reqwest::ClientBuilder::new();
         let client = builder.build().unwrap();
         // Init SG-Client
@@ -31,14 +36,14 @@ impl SendGridClient {
     }
 
     pub async fn send(&self, mail_body: MailBox<'_>) -> SGClienResult<Response> {
+        let parsed_mail = build_body(&mail_body)?;
         let reps = self
             .client
             .post(self.host.clone())
             .headers(self.headers().await?)
-            .body("")
+            .body(parsed_mail)
             .send()
             .await?;
-
         Ok(reps)
     }
 

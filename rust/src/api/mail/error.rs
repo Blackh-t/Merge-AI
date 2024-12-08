@@ -1,3 +1,5 @@
+use core::error;
+
 use reqwest::{
     self,
     header::{self, InvalidHeaderValue},
@@ -11,6 +13,9 @@ pub enum SGClientErr {
 
     #[error("Invalid Header Value: {0}")]
     InvalidHeader(#[from] InvalidHeaderValue),
+
+    #[error("Invalid Content Value: {0}")]
+    SerlizationError(#[from] serde_json::Error),
 }
 
 pub type SGClienResult<T> = Result<T, SGClientErr>;
