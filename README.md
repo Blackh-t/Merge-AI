@@ -17,19 +17,21 @@ We invite you to explore the DEMO and share your feedback! If there’s a featur
 
 ### In Progress:
 - **Web Integration** : Security
+- **Mail API**
 
 ---
 ### Roadmap
-- **Web Integration**
-- **AI Memory**
-- **Omni-Search**
-- **Mail API**
-- **Economic Market Analyzer**:  
-- **Encrypted P2P Connections**
-- **Device Synchronization**
-- **Customizable Task Automation**
-- **Image Processing**
-- **Smart Notifications**
+- [ ] **Web Integration**
+- [x] **AI Memory**
+- [ ] **Omni-Search**
+- [ ] **Mail API**
+- [ ] **Economic Market Analyzer**
+- [ ] **Encrypted P2P Connections**
+- [ ] **Device Synchronization**
+- [ ] **Customizable Task Automation**
+- [ ] **Image Processing**
+- [ ] **Smart Notifications**
+
 
 ---
 ### Upcoming Features
