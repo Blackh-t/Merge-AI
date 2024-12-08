@@ -41,3 +41,6 @@ We invite you to explore the DEMO and share your feedback! If there’s a featur
 ### Upcoming Features
 - **DashBoard**
 - **Face Recognition**
+
+<img src="demo.png" alt="Merge-AI" width="100" />
+
