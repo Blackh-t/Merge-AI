@@ -34,8 +34,10 @@ We invite you to explore the DEMO and share your feedback! If there’s a featur
 - [ ] **Customizable Task Automation**
 - [ ] **Image Processing**
 - [ ] **Smart Notifications**
+- [ ] **Face Recognition**
 
 
 ---
 ### Upcoming Features
 - **DashBoard**
+- **Face Recognition**
